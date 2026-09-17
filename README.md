@@ -7,3 +7,5 @@ npm create vite
 ``` npm install react-router-dom ```
 2. router 객체 만들기
 ```const router= createBrouserRouter([]) ```
+3. Layout - Outlet 개념 활용해서 공통 적용되는 레이아웃 생성하기
+``` Layout.tsx 참조```
