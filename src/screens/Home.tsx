@@ -1,7 +1,11 @@
- function Home() {
-    return <div>
-        <h1>여기는 홈 화면입니다</h1>
-    </div>
+import Timeline from "../components/Timeline";
+
+function Home() {
+  return (
+    <>
+      <Timeline />
+    </>
+  );
 }
 
 export default Home;
