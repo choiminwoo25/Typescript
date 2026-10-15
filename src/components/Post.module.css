@@ -1,18 +1,46 @@
 .container {
+  background: rgb(198, 198, 231);
+  max-width: 400px;
+  min-width: 250px;
+  padding: 10px;
 }
 .thumbnail {
+  background: rgb(83, 68, 68);
+  width: 100%;
+  aspect-ratio: 1;
 }
 .info {
+  background: greenyellow;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 .title {
 }
 .text {
+  font-size: 13px;
+}
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .wirter_box {
+  background: brown;
+  display: flex;
+  align-items: center;
+  gap: 10px; /*display 사용시만 적용 */
 }
 .writer_name {
+  font-size: 13px;
 }
 .wirter_thumbnail {
+  width: 30px;
+  height: 30px;
+  background: yellow;
+  border-radius: 100%;
 }
-.createAt {
+.createdAt {
+  font-size: 10px;
+  color: gray;
 }
