@@ -1,5 +1,7 @@
 //post(게시글) 관련 헬퍼 함수, 도구, 통신 담당
 
+import { supabase } from "../utils/supabase";
+
 //게시글의 데이터의 구조
 export interface IPost {
   /** 작성자의 닉네임 */
@@ -19,7 +21,12 @@ export interface IPost {
 // 게시글 생성(upload to server)
 //게시글 받아오기( load to server)
 
-export const getPosts = (): IPost[] => {
+export const getPosts = async (): Promise<IPost[]> => {
+  //[TEST]
+  const result = await supabase.from("Posts").select();
+
+  console.log("비동기 서버 호출 결과 :", result);
+
   // 1. 사전에 login 되어있는 상태로
   // 2. 서버로부터 최신순으로 등록된 post 데이터 받아오기
   const data: IPost[] = dummyPosts;

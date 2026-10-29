@@ -12,11 +12,11 @@ function Timeline() {
   const [loading, setLoading] = useState<boolean>(true);
 
   // 서버로부터 데이터 가져오기
-  const getData = () => {
+  const getData = async () => {
     // -- Loading 시작 --
     setLoading(true);
     // 서버에서 게시글  받아오기(최신순)
-    const result = getPosts();
+    const result = await getPosts();
     // 받아온 데이터를 State에 할당(저장)
     setData(result);
     // -- Loading 끝 --
