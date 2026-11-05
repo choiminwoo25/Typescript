@@ -10,30 +10,49 @@ function Timeline() {
   const [data, setData] = useState<IPost[]>([]);
   //데이터를 불러오는 동안 로딩 처리를 할 state
   const [loading, setLoading] = useState<boolean>(true);
-
-  // 서버로부터 데이터 가져오기
-  const getData = async () => {
-    // -- Loading 시작 --
-    setLoading(true);
-    // 서버에서 게시글  받아오기(최신순)
-    const result = await getPosts();
-    // 받아온 데이터를 State에 할당(저장)
-    setData(result);
-    // -- Loading 끝 --
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  };
+  const [error, setError] = useState<string | null>(null);
 
   // Mount(컴포넌트가 생성= 페이지에 접속했을 떄)
   // + 조건들을 만족할 때마다 코드 실행
   useEffect(() => {
-    getData();
+    let isMounted = true;
+
+    async function loadPosts() {
+      try {
+        // 서버에서 게시글  받아오기(최신순)
+        const result = await getPosts();
+        if (isMounted) {
+          setData(result);
+        }
+      } catch (caughtError) {
+        if (isMounted) {
+          setError(
+            caughtError instanceof Error
+              ? caughtError.message
+              : "게시글을 불러오는 중 오류가 발생했습니다.",
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void loadPosts();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   //로딩 중일때 보일 화면
   if (loading === true) {
     return <LoadingScreen />;
+  }
+
+  if (error) {
+    return <p role="alert">{error}</p>;
   }
 
   //로딩이 끝났을 때 화면에 보여지는 영역
@@ -44,6 +63,7 @@ function Timeline() {
       {data.map((post, index) => {
         return (
           <Post
+            key={post.id ?? `${post.createdAt}-${post.title}-${index}`}
             title={post.title}
             text={post.text}
             writer_name={post.writer_name}
