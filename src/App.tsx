@@ -5,6 +5,7 @@ import Settings from "./screens/Settings";
 import CreateAccount from "./screens/Create-Account";
 import Login from "./screens/Login-Account";
 import Layout from "./screens/Layout";
+import { AuthProvider } from "./Providers/auth-provider";
 
 //전역변수/함수
 //페이지 분배를 위한 router 생성
@@ -41,7 +42,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div style={{ height: "100vh" }}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </div>
   );
 }

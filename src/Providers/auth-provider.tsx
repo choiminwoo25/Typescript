@@ -7,7 +7,7 @@
 // - receiver : 전달받은 Context를 사용
 
 import type { Session } from "@supabase/supabase-js";
-import { createContext, useEffect, useState } from "react";
+import { createContext, use, useEffect, useState } from "react";
 import { supabase } from "../utils/supabase";
 
 //Context 데이터 구조
@@ -53,9 +53,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
   // 2.Provider Context 반환
   return (
-    <AuthContext value={{ session: session, isLoading: isLoading }}>
+    <AuthContext.Provider value={{ session: session, isLoading: isLoading }}>
       {children}
-    </AuthContext>
+    </AuthContext.Provider>
   );
 }
-//Receiver
+//Receiver (받아서 사용하기 위해)
+// Custom Hook : AuthContext 빠르게 사용
+//  ㄴ 작명규칙: useXXXX....
+//  ㄴ 사용규칙: 컴포넌트 항상 '최상단' 사용
+export const useSession = () => {
+  // 1. AuthContext 에 저장한 Session 정보 불러오기
+  const value = use(AuthContext);
+  // 2. 예외처리) 에러가 발생하면  에러 처리
+  if (!value) {
+    throw new Error("AuthContext Error");
+  }
+  // Goal : session 정보를 반환
+  return value;
+};

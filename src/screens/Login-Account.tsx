@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../utils/supabase";
 import { useNavigate } from "react-router-dom";
+import { useSession } from "../Providers/auth-provider";
 
 function Login() {
   //useState
@@ -8,6 +9,11 @@ function Login() {
   const [password, setPassword] = useState("");
   //useNavigate 페이지이동 훅
   const Navigate = useNavigate();
+  //나의 세션 정보를 얻어올 수 있는 Hook
+  const { session, isLoading } = useSession();
+  if (session) {
+    console.log("session 정보: ", session);
+  }
 
   // 서버에 로그인 정보 전달
   const onSubmit = async () => {

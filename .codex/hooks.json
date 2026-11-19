@@ -1,0 +1,16 @@
+{
+  "description": "Project-local review of potentially destructive tool calls.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/.codex/hooks/review_destructive_actions.mjs\"",
+            "statusMessage": "Checking for file or library removal"
+          }
+        ]
+      }
+    ]
+  }
+}
